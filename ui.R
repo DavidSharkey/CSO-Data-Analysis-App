@@ -11,6 +11,10 @@ ui <- fluidPage(theme = shinytheme("sandstone"), # Sandstone theme from rstudio.
   
   
     selectInput(inputId = "findData", label = "Find Data from StatBank", choices = NULL, selected = NULL, selectize = TRUE),
+    
+    actionButton(inputId = "downloadData", label = "Download Data"),
+    
+    tableOutput("data"),
   
   
 )

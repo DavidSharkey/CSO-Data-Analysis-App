@@ -4,17 +4,24 @@
 
 library(shinythemes) # a selection of different themes for the user interface: rstudio.github.io/shinythemes
 library(csodata) # data from CSO StatBank: cran.r.project.org/web/packages/csodata/index.html
+library(shinydashboard) # rstudio.github.io/shinydashboard/
 
 
-
-ui <- fluidPage(theme = shinytheme("sandstone"), # Sandstone theme from rstudio.github.io/shinythemes/
+ui <- dashboardPage( # rstudio.github.io/shinydashboard/get_started.html
   
-  
-    selectInput(inputId = "findData", label = "Find Data from StatBank", choices = NULL, selected = NULL, selectize = TRUE),
+     dashboardHeader(),
+     dashboardSidebar(),
     
-    actionButton(inputId = "downloadData", label = "Download Data"),
-    
-    tableOutput("data"),
+     dashboardBody(
   
+     box(selectInput(inputId = "findData", label = "Find Data from StatBank", choices = NULL, selected = NULL, selectize = TRUE),
+    
+     actionButton(inputId = "downloadData", label = "Download Data"), width = 6),
+   
+     box(DT::dataTableOutput("meta"), width = 6),
+    
+     box(DT::dataTableOutput("data"), width = 12) # shiny.rstudio.com/articles/datatables.html
+     
+    )
   
 )

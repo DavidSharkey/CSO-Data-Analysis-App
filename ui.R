@@ -9,19 +9,48 @@ library(shinydashboard) # rstudio.github.io/shinydashboard/
 
 ui <- dashboardPage( # rstudio.github.io/shinydashboard/get_started.html
   
-     dashboardHeader(),
-     dashboardSidebar(),
+     dashboardHeader(title = "CSO StatBank"),
+     dashboardSidebar(
+       
+       sidebarMenu(              # rstudio.github.io/shinydashboard/get_started.html
+         menuItem("Home", tabName = "home"),
+         menuItem("Summary Statistics", tabName = "summary_stats")
+         
+       )
+       
+     ),
     
      dashboardBody(
+       
+       tabItems(   # rstudio.github.io/shinydashboard/get_started.html
+         
+         tabItem(tabName = "home",
+                 
+                 fluidRow(
   
-     box(selectInput(inputId = "findData", label = "Find Data from StatBank", choices = NULL, selected = NULL, selectize = TRUE),
+                    box(selectInput(inputId = "findData", label = "Find Data from StatBank", choices = NULL, selected = NULL, selectize = TRUE),
     
-     actionButton(inputId = "downloadData", label = "Download Data"), width = 6),
+                    actionButton(inputId = "downloadData", label = "Download Data"), width = 6),
    
-     box(DT::dataTableOutput("meta"), width = 6),
+                    box(DT::dataTableOutput("meta"), width = 6),
     
-     box(DT::dataTableOutput("data"), width = 12) # shiny.rstudio.com/articles/datatables.html
-     
+                    box(DT::dataTableOutput("data"), width = 12) # shiny.rstudio.com/articles/datatables.html
+
+                 )),  
+         
+         tabItem(tabName = "summary_stats",
+                 
+                 fluidRow(
+                   
+                    box(selectInput(inputId = "selectCategory", label = "Pick variable for summary statistics", choices = NULL, selected = NULL, selectize = TRUE),
+                      textOutput("summary")) 
+                   
+                 )
+                 
+                 
+         )
+                 
+                 
     )
   
-)
+))

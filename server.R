@@ -18,6 +18,7 @@ server <- function(session, input, output){
   
     # fill selectInput with list of available datasets
     updateSelectizeInput(session, inputId = "findData", choices = getDataNames())
+    
 
     
     
@@ -36,12 +37,21 @@ server <- function(session, input, output){
   }
     
     
+    getData <- function(){
+      
+      
+      id <- getDataId()
+      values <- reactiveValues()  # shiny.rstudio.com/reference/shiny/0.11/reativeValues.html
+      values <- cso_get_data(id)
+      
+    }
+  
     
    output$data <- DT::renderDataTable({  # shiny.rstudio.com/articles/datatables.html
          
     
-       id <- getDataId()
-       DT::datatable(cso_get_data(id)) # https://shiny.rstudio.com/gallery/datatables-options.html and https://shiny.rstudio.com/articles/datatables.html
+       
+       DT::datatable(getData()) # https://shiny.rstudio.com/gallery/datatables-options.html and https://shiny.rstudio.com/articles/datatables.html
       
       
     })
@@ -57,7 +67,9 @@ server <- function(session, input, output){
        DT::datatable(cbind(row_names, data))
      
     })
-    
+   
+   
+   
   
   
 

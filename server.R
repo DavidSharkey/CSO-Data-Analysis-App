@@ -16,10 +16,14 @@ server <- function(session, input, output){
     
   }   
   
+  
+  
+  
+  
     # fill selectInput with list of available datasets
     updateSelectizeInput(session, inputId = "findData", choices = getDataNames())
     
-
+    updateSelectizeInput(session, inputId = "summary", choices = getDataNames())
     
     
     getDataId <- function(){
@@ -35,6 +39,8 @@ server <- function(session, input, output){
     
     
   }
+    
+    
     
     
     getData <- function(){
@@ -67,6 +73,10 @@ server <- function(session, input, output){
        DT::datatable(cbind(row_names, data))
      
     })
+   
+   
+   
+   
    
    
    

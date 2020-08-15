@@ -30,7 +30,9 @@ ui <- dashboardPage( # rstudio.github.io/shinydashboard/get_started.html
   
                     box(selectInput(inputId = "findData", label = "Find Data from StatBank", choices = NULL, selected = NULL, selectize = TRUE),
     
-                    actionButton(inputId = "downloadData", label = "Download Data"), width = 6),
+                    actionButton(inputId = "downloadData", label = "Download Data"),
+                    
+                    selectInput(inputId = "summary", label = "Summary Statistics", choices = NULL, selected = NULL, selectize = TRUE), width = 6),
    
                     box(DT::dataTableOutput("meta"), width = 6),
     

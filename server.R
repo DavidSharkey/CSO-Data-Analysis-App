@@ -6,7 +6,6 @@ library(csodata) # data from SCO StatBank: cran.r-project.org/web/packages/csoda
 
 
 
-
 server <- function(session, input, output){
 
   getDataNames <- function(){
@@ -18,12 +17,10 @@ server <- function(session, input, output){
   
   
   
-  
-  
     # fill selectInput with list of available datasets
     updateSelectizeInput(session, inputId = "findData", choices = getDataNames())
     
-    updateSelectizeInput(session, inputId = "summary", choices = getDataNames())
+    updateSelectizeInput(session, inputId = "summary", choices = c(colnames(getDataNames())))
     
     
     getDataId <- function(){
@@ -37,21 +34,23 @@ server <- function(session, input, output){
         id <- idData[indexData] # id of selected dataset  
     
     
-    
   }
     
     
     
-    
-    getData <- function(){
+    # https://shiny.rstudio.com/articles/reactivity-overview.html#:~:text=In%20a%20simple%20Shiny%20application,accessible%20through%20the%20output%20object.&text=In%20an%20app%20with%20the,plot%20will%20automatically%20re%2Dexecute.
+    getData <- eventReactive(input$downloadData, { # https://shiny.programmingpedia.net/en/tutorial/10787/reactive--reactivevalue-and-eventreactive--observe-and-observeevent-in-shiny
       
       
       id <- getDataId()
       values <- reactiveValues()  # shiny.rstudio.com/reference/shiny/0.11/reativeValues.html
       values <- cso_get_data(id)
       
-    }
-  
+    })
+    
+    
+    
+
     
    output$data <- DT::renderDataTable({  # shiny.rstudio.com/articles/datatables.html
          
@@ -61,6 +60,10 @@ server <- function(session, input, output){
       
       
     })
+   
+   
+   
+   
    
    
    output$meta <- DT::renderDataTable({
@@ -75,12 +78,5 @@ server <- function(session, input, output){
     })
    
    
-   
-   
-   
-   
-   
-  
-  
 
 }

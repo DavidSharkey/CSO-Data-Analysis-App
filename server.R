@@ -20,7 +20,15 @@ server <- function(session, input, output){
     # fill selectInput with list of available datasets
     updateSelectizeInput(session, inputId = "findData", choices = getDataNames())
     
-    updateSelectizeInput(session, inputId = "summary", choices = c(colnames(getDataNames())))
+    
+    
+    # https://stackoverflow.com/questions/62974086/shiny-in-search-of-simple-selectinput-dependency-solution
+  observe({ # https://stackoverflow.com/questions/62293044/r-shiny-what-is-the-problem-with-my-observe-function-updateselectinput and from previous project
+    
+    updateSelectizeInput(session, inputId = "summary", choices = colnames(getData()))
+    
+    
+  })
     
     
     getDataId <- function(){
@@ -70,5 +78,18 @@ server <- function(session, input, output){
     })
    
    
+   output$sum <- DT::renderDataTable({
+     
+      
+      data <- getData()
+      col <- input$summary
+      
+      
+     
+   })
+     
+   }
+   
+   
+   
 
-}

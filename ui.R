@@ -14,7 +14,7 @@ ui <- dashboardPage( # rstudio.github.io/shinydashboard/get_started.html
        
        sidebarMenu(              # rstudio.github.io/shinydashboard/get_started.html
          menuItem("Home", tabName = "home"),
-         menuItem("Summary Statistics", tabName = "summary_stats")
+         menuItem("Visualisations", tabName = "visualisations")
          
        )
        
@@ -30,22 +30,22 @@ ui <- dashboardPage( # rstudio.github.io/shinydashboard/get_started.html
   
                     box(selectInput(inputId = "findData", label = "Find Data from StatBank", choices = NULL, selected = NULL, selectize = TRUE),
     
-                    actionButton(inputId = "downloadData", label = "Download Data"),
+                        actionButton(inputId = "downloadData", label = "Download Data"), wdith = 10),
                     
-                    selectInput(inputId = "summary", label = "Summary Statistics", choices = NULL, selected = NULL, selectize = TRUE), width = 6),
-   
                     box(DT::dataTableOutput("meta"), width = 6),
-    
+                    
+                    box(selectInput(inputId = "summary", label = "Summary Statistics", choices = NULL, selected = NULL, selectize = TRUE),
+                        
+                        DT::dataTableOutput("sum"), width = 6),
+   
                     box(DT::dataTableOutput("data"), width = 12) # shiny.rstudio.com/articles/datatables.html
 
                  )),  
          
-         tabItem(tabName = "summary_stats",
+         tabItem(tabName = "visualisations",
                  
                  fluidRow(
                    
-                    box(selectInput(inputId = "selectCategory", label = "Pick variable for summary statistics", choices = NULL, selected = NULL, selectize = TRUE),
-                      textOutput("summary")) 
                    
                  )
                  

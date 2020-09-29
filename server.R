@@ -2,7 +2,7 @@
 # Server for CSO StatBank App
 
 library(shiny)
-library(csodata) # data from SCO StatBank: cran.r-project.org/web/packages/csodata/index.html
+library(csodata) 
 
 
 
@@ -10,7 +10,7 @@ server <- function(session, input, output){
 
   getDataNames <- function(){
     
-      tocData <- cso_get_toc()   # details regarding data: csodata reference (https://cran.r-project.org/web/packages/csodata/csodata.pdf) and https://cran.r-project.org/web/packages/csodata/vignettes/quick_start_guide.html
+      tocData <- cso_get_toc()   # details regarding data
       listData <- tocData$title  # get list of all datasets available 
     
   }   
@@ -22,8 +22,8 @@ server <- function(session, input, output){
     
     
     
-    # https://stackoverflow.com/questions/62974086/shiny-in-search-of-simple-selectinput-dependency-solution
-  observe({ # https://stackoverflow.com/questions/62293044/r-shiny-what-is-the-problem-with-my-observe-function-updateselectinput and from previous project
+    
+  observe({ 
     
     updateSelectizeInput(session, inputId = "summary", choices = colnames(getData()))
     
@@ -36,7 +36,7 @@ server <- function(session, input, output){
         selectedData <- input$findData # name of dataset
         tocData <- cso_get_toc()  # extract table of contents
         titleData <- tocData$title # list of dataset names
-        indexData <- which(titleData == selectedData) # matches name of dataset to ID and returns index https://stackoverflow.com/questions/45631665/get-index-of-a-specific-element-in-vector-using-operator
+        indexData <- which(titleData == selectedData) # matches name of dataset to ID and returns index 
     
         idData <- tocData$id   
         id <- idData[indexData] # id of selected dataset  
@@ -45,21 +45,21 @@ server <- function(session, input, output){
   }
     
     
-    # https://shiny.rstudio.com/articles/reactivity-overview.html#:~:text=In%20a%20simple%20Shiny%20application,accessible%20through%20the%20output%20object.&text=In%20an%20app%20with%20the,plot%20will%20automatically%20re%2Dexecute.
-    getData <- eventReactive(input$downloadData, { # https://shiny.programmingpedia.net/en/tutorial/10787/reactive--reactivevalue-and-eventreactive--observe-and-observeevent-in-shiny
+    
+    getData <- eventReactive(input$downloadData, { 
       
       
       id <- getDataId()
-      values <- reactiveValues()  # shiny.rstudio.com/reference/shiny/0.11/reativeValues.html
+      values <- reactiveValues()  
       values <- cso_get_data(id)
       
     })
     
     
-   output$data <- DT::renderDataTable({  # shiny.rstudio.com/articles/datatables.html
+   output$data <- DT::renderDataTable({  
          
     
-       DT::datatable(getData()) # https://shiny.rstudio.com/gallery/datatables-options.html and https://shiny.rstudio.com/articles/datatables.html
+       DT::datatable(getData()) 
       
       
     })

@@ -2,17 +2,17 @@
 # User Interface for CSO StatBank App
 
 
-library(shinythemes) # a selection of different themes for the user interface: rstudio.github.io/shinythemes
-library(csodata) # data from CSO StatBank: cran.r.project.org/web/packages/csodata/index.html
-library(shinydashboard) # rstudio.github.io/shinydashboard/
+library(shinythemes) 
+library(csodata) 
+library(shinydashboard) 
 
 
-ui <- dashboardPage( # rstudio.github.io/shinydashboard/get_started.html
+ui <- dashboardPage( 
   
      dashboardHeader(title = "CSO StatBank"),
      dashboardSidebar(
        
-       sidebarMenu(              # rstudio.github.io/shinydashboard/get_started.html
+       sidebarMenu(             
          menuItem("Home", tabName = "home"),
          menuItem("Visualisations", tabName = "visualisations")
          
@@ -22,7 +22,7 @@ ui <- dashboardPage( # rstudio.github.io/shinydashboard/get_started.html
     
      dashboardBody(
        
-       tabItems(   # rstudio.github.io/shinydashboard/get_started.html
+       tabItems(   
          
          tabItem(tabName = "home",
                  
@@ -38,7 +38,7 @@ ui <- dashboardPage( # rstudio.github.io/shinydashboard/get_started.html
                         
                         DT::dataTableOutput("sum"), width = 6),
    
-                    box(DT::dataTableOutput("data"), width = 12) # shiny.rstudio.com/articles/datatables.html
+                    box(DT::dataTableOutput("data"), width = 12) 
 
                  )),  
          

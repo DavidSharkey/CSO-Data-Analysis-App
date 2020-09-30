@@ -3,7 +3,7 @@
 
 library(shiny)
 library(csodata) 
-
+library(tidyr)
 
 
 server <- function(session, input, output){
@@ -25,7 +25,7 @@ server <- function(session, input, output){
     
   observe({ 
     
-    updateSelectizeInput(session, inputId = "summary", choices = colnames(getData()))
+    updateSelectizeInput(session, inputId = "summary", choices = colnames(summary(getData())))
     
     
   })
@@ -71,18 +71,22 @@ server <- function(session, input, output){
        meta <- cso_get_meta(id) # get meta data
      
        # Make table of meta-data
-       row_names <- c("Title", "Source", "Units", "Date Last Modified", "Variables", "Statistics") #
-       data <- c(meta$Title, meta$Source, meta$Units, meta$Date_last_modified, meta$Variables, meta$Statistics)
+       row_names <- list("Title", "Source", "Units", "Date Last Modified", "Variables", "Statistics") #
+       data <- list(meta$Title, meta$Source, meta$Units, meta$Date_last_modified, meta$Variables, meta$Statistics)
        DT::datatable(cbind(row_names, data))
-     
+       
     })
    
    
    output$sum <- DT::renderDataTable({
      
       
-      data <- getData()
+      #data <- getData()
       col <- input$summary
+      num <- which(colnames(summary(getData())) == col)
+      a <- summary(getData())
+      f <- a[,num]
+      separate(data.frame(f),f, into = c("1", "2"), sep = ":")
       
       
      

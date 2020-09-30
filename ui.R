@@ -30,9 +30,9 @@ ui <- dashboardPage(
   
                     box(selectInput(inputId = "findData", label = "Find Data from StatBank", choices = NULL, selected = NULL, selectize = TRUE),
     
-                        actionButton(inputId = "downloadData", label = "Download Data"), wdith = 10),
+                        actionButton(inputId = "downloadData", label = "Download Data"),
                     
-                    box(DT::dataTableOutput("meta"), width = 6),
+                        DT::dataTableOutput("meta"), width = 6),
                     
                     box(selectInput(inputId = "summary", label = "Summary Statistics", choices = NULL, selected = NULL, selectize = TRUE),
                         

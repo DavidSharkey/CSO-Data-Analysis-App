@@ -5,7 +5,7 @@
 library(shinythemes) 
 library(csodata) 
 library(shinydashboard) 
-
+library(plotly)
 
 ui <- dashboardPage( 
   
@@ -46,6 +46,7 @@ ui <- dashboardPage(
                  
                  fluidRow(
                    
+                   box(plotlyOutput("choropleth"))
                    
                  )
                  

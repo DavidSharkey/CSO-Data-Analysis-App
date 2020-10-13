@@ -4,7 +4,8 @@
 library(shiny)
 library(csodata) 
 library(tidyr)
-
+library(plotly)
+library(rjson)
 
 server <- function(session, input, output){
 
@@ -81,16 +82,24 @@ server <- function(session, input, output){
    output$sum <- DT::renderDataTable({
      
       
-      #data <- getData()
       col <- input$summary
-      num <- which(colnames(summary(getData())) == col)
-      a <- summary(getData())
-      f <- a[,num]
+      index <- which(colnames(summary(getData())) == col)
+      data <- summary(getData())
+      stats_data <- a[,num]
       separate(data.frame(f),f, into = c("1", "2"), sep = ":")
       
       
      
    })
+   
+   
+   output$choropleth <- renderPlotly({
+     
+     plot_ly(type = "choropleth", locationmode = "country names", location = "Ireland")
+     
+   })
+   
+   
      
    }
    

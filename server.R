@@ -12,15 +12,15 @@ server <- function(session, input, output){
   getDataNames <- function(){
     
       tocData <- cso_get_toc()   # details regarding data
-      listData <- tocData$title  # get list of all datasets available 
-    
-  }   
+      #listData <- tocData$title  # get list of all datasets available
+      paste(tocData[,2], tocData[,3])
+      
+        }   
   
   
   
     # fill selectInput with list of available datasets
-    updateSelectizeInput(session, inputId = "findData", choices = getDataNames())
-    
+   updateSelectizeInput(session, inputId = "findData", choices = getDataNames())
     
     
     
@@ -34,14 +34,23 @@ server <- function(session, input, output){
     
     getDataId <- function(){
     
-        selectedData <- input$findData # name of dataset
-        tocData <- cso_get_toc()  # extract table of contents
-        titleData <- tocData$title # list of dataset names
-        indexData <- which(titleData == selectedData) # matches name of dataset to ID and returns index 
+        #selectedData <- input$findData # name of dataset
+        #print(selectedData)
+        #tocData <- cso_get_toc()  # extract table of contents
+        #titleData <- tocData$title # list of dataset names
+        #indexData <- which(titleData == selectedData) # matches name of dataset to ID and returns index 
     
-        idData <- tocData$id   
-        id <- idData[indexData] # id of selected dataset  
+        #idData <- tocData$id   
+        #id <- idData[indexData] # id of selected dataset  
     
+      
+        selectedData <- input$findData
+        print(selectedData)
+        ls <- nchar(selectedData)
+        print(ls)
+        ah <- substr(selectedData, ls - 4, ls)
+        print(ah)
+        
     
   }
     
@@ -95,7 +104,7 @@ server <- function(session, input, output){
    
    output$choropleth <- renderPlotly({
      
-     plot_ly(type = "choropleth", locationmode = "country names", location = "Ireland")
+#     plot_ly(type = "choropleth", locationmode = "country names", location = "Ireland")
      
    })
    

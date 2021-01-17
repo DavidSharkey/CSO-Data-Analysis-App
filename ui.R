@@ -6,6 +6,7 @@ library(shinythemes)
 library(csodata) 
 library(shinydashboard) 
 library(plotly)
+library(shinycssloaders) # https://github.com/daattali/shinycssloaders
 
 ui <- dashboardPage( 
   
@@ -14,7 +15,8 @@ ui <- dashboardPage(
        
        sidebarMenu(             
          menuItem("Home", tabName = "home"),
-         menuItem("Visualisations", tabName = "visualisations")
+         menuItem("Statistics/Visualisations", tabName = "visualisations"),
+         menuItem("About", tabName = "about")
          
        )
        
@@ -36,9 +38,9 @@ ui <- dashboardPage(
                     
                     box(selectInput(inputId = "summary", label = "Summary Statistics", choices = NULL, selected = NULL, selectize = TRUE),
                         
-                        DT::dataTableOutput("sum"), width = 6),
+                        shinycssloaders::withSpinner(DT::dataTableOutput("sum")), width = 6), # https://github.com/daattali/shinycssloaders
    
-                    box(DT::dataTableOutput("data"), width = 12) 
+                    box(shinycssloaders::withSpinner(DT::dataTableOutput("data")), width = 12) 
 
                  )),  
          
@@ -46,12 +48,28 @@ ui <- dashboardPage(
                  
                  fluidRow(
                    
-                   box(plotlyOutput("choropleth"))
                    
-                 )
+                   #box(plotlyOutput("choropleth"))
+                   box(
+                     
+                     selectInput("x_var", "Choose X variable", choices = NULL, selected = NULL, selectize = TRUE),
+                     
+                     selectInput("y_var", "Choose y variable", choices = NULL, selected = NULL, selectize = TRUE),
+                     
+                     plotlyOutput("bar_chart"), width = 12)
+                   
+                 )),
+         
+         
+         tabItem(tabName = "about",
                  
-                 
-         )
+                 fluidRow(
+                   
+                 ))
+         
+         
+         
+         
                  
                  
     )
